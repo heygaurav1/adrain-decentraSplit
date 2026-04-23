@@ -884,21 +884,86 @@ function FinalCTA({ onGuest, onConnect }: { onGuest: () => void; onConnect: () =
   );
 }
 
-// ─── SLIM FOOTER ─────────────────────────────────────────────────────────────
-function SlimFooter() {
+// ─── FULL LANDSCAPE FOOTER ───────────────────────────────────────────────────
+function Footer({ onGuest, onConnect }: { onGuest: () => void; onConnect: () => void }) {
+  const links = {
+    'Product': ['Features', 'How It Works', 'Guest Mode', 'Protocol', 'Analytics'],
+    'Ecosystem': ['Ethereum', 'Polygon', 'Arbitrum', 'Base', 'Optimism'],
+    'Developers': ['Smart Contract', 'GitHub', 'Audit Report', 'Documentation', 'Deployments'],
+    'Company': ['About Team Alpha Dev', 'Hackathon 2024', 'Contact', 'Twitter', 'Discord'],
+  };
   return (
-    <>
-      <div className="divider" />
-      <div style={{ padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-2)', flexWrap: 'wrap', gap: 12 }}>
-        <span style={{ fontFamily: 'DM Mono, monospace', fontSize: 11, color: 'var(--text-3)' }}>DecentraSplit v1.0 · Team Alpha Dev</span>
-        <div style={{ display: 'flex', gap: 20 }}>
-          {['GitHub','Docs','Audit Report','Twitter'].map(l => (
-            <span key={l} style={{ fontFamily: 'DM Mono, monospace', fontSize: 11, color: 'var(--text-3)', cursor: 'pointer' }}>{l}</span>
+    <footer style={{ background: '#050709', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+      {/* Main footer grid */}
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '80px 40px 60px', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', gap: 48 }}>
+        {/* Brand col */}
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#0ea5e9,#6366f1)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 16, color: '#fff', fontFamily: 'Syne,sans-serif' }}>D</div>
+            <span style={{ fontFamily: 'Syne,sans-serif', fontWeight: 800, fontSize: 17, letterSpacing: '-0.03em', color: '#f0f4ff' }}>DecentraSplit</span>
+          </div>
+          <p style={{ fontSize: 13, color: 'rgba(240,244,255,0.45)', lineHeight: 1.75, marginBottom: 28, maxWidth: 260 }}>
+            The first trustless group expense protocol. Split bills with friends — not trust. Powered by Ethereum.
+          </p>
+          {/* Status badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 100, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.18)', marginBottom: 24 }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 8px #10b981' }} />
+            <span style={{ fontSize: 11, fontFamily: 'DM Mono,monospace', color: '#10b981', letterSpacing: '0.06em' }}>Protocol Live · Polygon Mainnet</span>
+          </div>
+          {/* CTA */}
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button onClick={onGuest} style={{ padding: '9px 18px', fontSize: 12, fontWeight: 600, fontFamily: 'Syne,sans-serif', background: '#0ea5e9', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', transition: 'all 0.2s' }}>
+              Try Guest Mode
+            </button>
+            <button onClick={onConnect} style={{ padding: '9px 18px', fontSize: 12, fontWeight: 500, fontFamily: 'Syne,sans-serif', background: 'transparent', color: 'rgba(240,244,255,0.6)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 8, cursor: 'pointer' }}>
+              Connect Wallet
+            </button>
+          </div>
+        </div>
+
+        {/* Link columns */}
+        {Object.entries(links).map(([col, items]) => (
+          <div key={col}>
+            <div style={{ fontSize: 11, fontFamily: 'DM Mono,monospace', color: 'rgba(240,244,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20 }}>{col}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {items.map(item => (
+                <span key={item} style={{ fontSize: 13, color: 'rgba(240,244,255,0.5)', cursor: 'pointer', transition: 'color 0.2s', lineHeight: 1 }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#f0f4ff')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(240,244,255,0.5)')}
+                >{item}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Stats strip */}
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '28px 40px', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24, textAlign: 'center' }}>
+          {[['10,000+','Transactions Settled'],['$2M+','Total Volume'],['5 Chains','Deployed On'],['100%','Open Source']].map(([v,l]) => (
+            <div key={l}>
+              <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'Syne,sans-serif', letterSpacing: '-0.02em', color: '#f0f4ff', marginBottom: 4 }}>{v}</div>
+              <div style={{ fontSize: 11, fontFamily: 'DM Mono,monospace', color: 'rgba(240,244,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{l}</div>
+            </div>
           ))}
         </div>
-        <span style={{ fontFamily: 'DM Mono, monospace', fontSize: 11, color: 'var(--text-3)' }}>© 2024</span>
       </div>
-    </>
+
+      {/* Bottom bar */}
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+        <span style={{ fontFamily: 'DM Mono,monospace', fontSize: 11, color: 'rgba(240,244,255,0.2)' }}>
+          © 2024 Team Alpha Dev · Built at ETHGlobal Hackathon
+        </span>
+        <div style={{ display: 'flex', gap: 24 }}>
+          {['Privacy','Terms','Security','MIT License'].map(l => (
+            <span key={l} style={{ fontFamily: 'DM Mono,monospace', fontSize: 11, color: 'rgba(240,244,255,0.2)', cursor: 'pointer' }}>{l}</span>
+          ))}
+        </div>
+        <span style={{ fontFamily: 'DM Mono,monospace', fontSize: 11, color: 'rgba(240,244,255,0.2)' }}>
+          v1.0.0 · Solidity ^0.8.20
+        </span>
+      </div>
+    </footer>
   );
 }
 
@@ -908,7 +973,6 @@ export default function Landing({ onGuest, onConnect }: { onGuest: () => void; o
     <>
       <style>{css}</style>
       <Navbar onGuest={onGuest} onConnect={onConnect} />
-      {/* 15 landscape sections */}
       <Hero onGuest={onGuest} onConnect={onConnect} />
       <StatsBar />
       <TheProblem />
@@ -924,7 +988,7 @@ export default function Landing({ onGuest, onConnect }: { onGuest: () => void; o
       <Testimonials />
       <FAQ />
       <FinalCTA onGuest={onGuest} onConnect={onConnect} />
-      <SlimFooter />
+      <Footer onGuest={onGuest} onConnect={onConnect} />
     </>
   );
 }
