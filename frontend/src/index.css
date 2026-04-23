@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
-  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
   --color-primary-50: #f0f9ff;
   --color-primary-100: #e0f2fe;
   --color-primary-200: #bae6fd;
@@ -13,110 +14,165 @@
   --color-primary-700: #0369a1;
   --color-primary-800: #075985;
   --color-primary-900: #0c4a6e;
-  --color-primary-950: #082f49;
 }
 
 :root {
-  --bg-color: #000;
-  --text-color: #e2e8f0;
-  --text-muted: #94a3b8;
-  --glass-bg: rgba(255, 255, 255, 0.02);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --card-bg: rgba(255, 255, 255, 0.01);
-  --card-border: rgba(255, 255, 255, 0.05);
-  
-  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  --bg: #000;
+  --bg-2: #0a0a0a;
+  --bg-3: #111;
+  --text: #fafafa;
+  --text-2: #a1a1aa;
+  --text-3: #52525b;
+  --border: rgba(255,255,255,0.07);
+  --card: rgba(255,255,255,0.03);
+  font-family: 'Inter', system-ui, sans-serif;
   color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 [data-theme='light'] {
-  --bg-color: #f8fafc;
-  --text-color: #0f172a;
-  --text-muted: #64748b;
-  --glass-bg: rgba(0, 0, 0, 0.02);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --card-bg: #ffffff;
-  --card-border: rgba(0, 0, 0, 0.05);
+  --bg: #ffffff;
+  --bg-2: #f9fafb;
+  --bg-3: #f3f4f6;
+  --text: #09090b;
+  --text-2: #52525b;
+  --text-3: #a1a1aa;
+  --border: rgba(0,0,0,0.07);
+  --card: rgba(0,0,0,0.02);
   color-scheme: light;
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg-color);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%);
-  background-attachment: fixed;
-  color: var(--text-color);
-  transition: background-color 0.5s ease, color 0.5s ease;
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Custom Utilities */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+.surface {
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.glass-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--card-border);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.surface:hover {
+  border-color: rgba(14,165,233,0.3);
+  background: rgba(14,165,233,0.03);
 }
 
-.glass-card:hover {
-  background: var(--glass-bg);
-  border: 1px solid var(--color-primary-500);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-2);
 }
 
-.text-gradient {
-  background: linear-gradient(to right, var(--text-color) 20%, #38bdf8 50%, #818cf8 80%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 5s linear infinite;
+.btn-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+}
+.btn-main:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  background: var(--card);
+  border-color: rgba(14,165,233,0.3);
 }
 
-.btn-primary {
-  @apply px-8 py-4 rounded-[20px] font-bold transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 cursor-pointer text-white;
-  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-  box-shadow: 0 8px 25px -5px rgba(14, 165, 233, 0.4);
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 20px rgba(14,165,233,0.25);
 }
-
-.btn-secondary {
-  @apply px-8 py-4 rounded-[20px] font-bold transition-all duration-300 border border-white/10 active:scale-95 cursor-pointer;
-  background: var(--glass-bg);
-  color: var(--text-color);
-  backdrop-filter: blur(10px);
+.btn-accent:hover {
+  background: #0284c7;
+  box-shadow: 0 0 30px rgba(14,165,233,0.4);
+  transform: translateY(-1px);
 }
 
 input, textarea {
-  @apply bg-white/5 border border-white/10 rounded-[20px] px-6 py-4 focus:outline-none focus:ring-2 focus:ring-primary-500/30 transition-all font-medium;
-  background: var(--glass-bg);
-  color: var(--text-color);
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+input:focus, textarea:focus {
+  border-color: #0ea5e9;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+.tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0ea5e9;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
 }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
